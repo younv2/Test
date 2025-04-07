@@ -20,8 +20,6 @@ public class GameManager : MonoBehaviour
 
     public static int stage = 0;
 
-    // 스테이지 해금 구현
-
     private void Awake()
     {
         if(instance == null)
@@ -69,6 +67,9 @@ public class GameManager : MonoBehaviour
 
     public void StageClear()
     {
-        PlayerPrefs.SetInt("clearMaxStage", stage + 1);
+        if (PlayerPrefs.GetInt("clearMaxStage") < stage + 1)
+        {
+            PlayerPrefs.SetInt("clearMaxStage", stage + 1);
+        }
     }
 }
