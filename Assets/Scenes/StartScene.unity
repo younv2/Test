@@ -264,7 +264,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.17566685, g: 0.16642933, b: 0.41509432, a: 0}
+  m_BackGroundColor: {r: 0.3529412, g: 0.3529412, b: 0.88235295, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -658,6 +658,7 @@ GameObject:
   - component: {fileID: 1115132165}
   - component: {fileID: 1115132164}
   - component: {fileID: 1115132163}
+  - component: {fileID: 1115132166}
   m_Layer: 5
   m_Name: CollectionBtn
   m_TagString: Untagged
@@ -728,7 +729,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1115132164}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1115132166}
+        m_TargetAssemblyTypeName: CollectionButton, Assembly-CSharp
+        m_MethodName: ToCollection
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1115132164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -767,6 +780,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1115132161}
   m_CullTransparentMesh: 1
+--- !u!114 &1115132166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1115132161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f137d196a97a4844a135b64d7f2ce65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1244587021
 GameObject:
   m_ObjectHideFlags: 0
@@ -1085,7 +1110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1093,7 +1118,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 415abd21d1d6dcc48a3fa758cdf52383, type: 3}
+    m_Font: {fileID: 12800000, guid: 2a7fd7ae43768dd4ea4469daa8cbad3f, type: 3}
     m_FontSize: 120
     m_FontStyle: 0
     m_BestFit: 0
