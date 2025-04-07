@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
 
     public static int stage = 0;
 
+    public int life = 10;
+
     private void Awake()
     {
         if(instance == null)
@@ -38,8 +40,7 @@ public class GameManager : MonoBehaviour
         timeTxt.text = time.ToString("N2");
         if (time > 30.0f)
         {
-            endTxt.SetActive(true);
-            Time.timeScale = 0.0f;
+            GameOver();
         }
     }
     public void Matched()
@@ -53,13 +54,22 @@ public class GameManager : MonoBehaviour
             {
                 Time.timeScale = 0f;
                 endTxt.SetActive(true);
-                StageClear();
+                if(GetStarScore() == 3)
+                {
+                    StageClear();
+                }
             }
         }
         else
         {
             firstCard.CloseCard();
             secondCard.CloseCard();
+
+            life--;
+            if(life <= 0)
+            {
+                GameOver();
+            }
         }
         firstCard = null;
         secondCard = null;
@@ -72,4 +82,29 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("clearMaxStage", stage + 1);
         }
     }
+
+    private void GameOver()
+    {
+        Time.timeScale = 0f;
+        endTxt.SetActive(true);
+    }
+
+    private int GetStarScore()
+    {
+        int starScore = 0;
+        if(time <= 15f && life >= 3)
+        {
+            starScore = 3;
+        }
+        else if (time <= 20f && life >= 2)
+        {
+            starScore = 2;
+        }
+        else
+        {
+            starScore = 1;
+        }
+        Debug.Log("[GameManager] starScore: " + starScore);
+        return starScore;
+    }   
 }
