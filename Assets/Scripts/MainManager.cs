@@ -11,7 +11,7 @@ public class MainManager : MonoBehaviour
     public Button collectionBtn;
     private void Awake()
     {
-        startBtn.onClick.AddListener(() => //testTxt
+        startBtn.onClick.AddListener(() => 
         {
             SceneManager.LoadScene("StageSelectionScene", LoadSceneMode.Additive);
         });
