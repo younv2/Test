@@ -35,24 +35,19 @@ public class StageSelector : MonoBehaviour
 
         leftBtn.onClick.AddListener(() =>
         {
-            stage--;
-            if(stage < 1)
+            if(stage <= 1)
             {
-                stage = 1;
+                return;
             }
+            stage--;
             stageTxt.text = stage.ToString();
         });
 
         rightBtn.onClick.AddListener(() =>
         {
-            if(stage < activeMaxStage)
-            {
-                stage++;
-                if(stage > maxStage)
-                {
-                    stage = maxStage;
-                }
-            }
+            if (stage >= activeMaxStage)
+                return;
+            stage++;
             stageTxt.text = stage.ToString();
         });
     }
