@@ -16,6 +16,12 @@ public class GameManager : MonoBehaviour
     public int cardCount = 0;
     private float time = 0f;
 
+    public Text stageTxt;
+
+    public static int stage = 0;
+
+    // 스테이지 해금 구현
+
     private void Awake()
     {
         if(instance == null)
@@ -49,6 +55,7 @@ public class GameManager : MonoBehaviour
             {
                 Time.timeScale = 0f;
                 endTxt.SetActive(true);
+                StageClear();
             }
         }
         else
@@ -58,5 +65,10 @@ public class GameManager : MonoBehaviour
         }
         firstCard = null;
         secondCard = null;
+    }
+
+    public void StageClear()
+    {
+        PlayerPrefs.SetInt("clearMaxStage", stage + 1);
     }
 }
