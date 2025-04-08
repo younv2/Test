@@ -14,17 +14,24 @@ public class SoundManager : MonoBehaviour
     public static SoundManager instance;
     [SerializeField] private AudioMixer audioMixer;
     [SerializeField] private List<AudioClip> audioClipList;
-    [HideInInspector]public List<SoundPlayer> soundPlayerList;
+    [HideInInspector]public Dictionary<SoundType,List<SoundPlayer>> soundPlayerDic;
+
+    public AudioMixer AudioMixer { get { return audioMixer; } }
 
     private void Awake()
     {
         if (instance == null)
             instance = this;
+        else if(instance != this)
+        {
+            Destroy(this.gameObject);
+        }
         DontDestroyOnLoad(gameObject);
+        soundPlayerDic = new Dictionary<SoundType, List<SoundPlayer>>();
     }
     public void SetVolume(SoundType type, float volume)
     {
-        audioMixer.SetFloat(type.ToString(), volume);
+        audioMixer.SetFloat(type.ToString(), Mathf.Log10(volume) * 20);
     }
     /// <summary>
     /// 음악 실행
@@ -34,6 +41,10 @@ public class SoundManager : MonoBehaviour
     /// <param name="isLoop">반복 여부</param>
     public void PlaySound(SoundType type, string name, bool isLoop = false)
     {
+        if(type==SoundType.BGM && soundPlayerDic.ContainsKey(type) && soundPlayerDic[type].Count >=1)
+        {
+            return;
+        }
         GameObject go = Instantiate(new GameObject(), transform);
         SoundPlayer sp = go.AddComponent<SoundPlayer>();
         AudioMixerGroup mixerGroup = audioMixer.FindMatchingGroups(type.ToString())[0];
@@ -42,6 +53,13 @@ public class SoundManager : MonoBehaviour
         sp.Setting(mixerGroup, clip, isLoop);
         sp.Play();
 
-        soundPlayerList.Add(sp);
+        if(soundPlayerDic.ContainsKey(type))
+        {
+            soundPlayerDic[type].Add(sp);
+        }
+        else
+        {
+            soundPlayerDic.Add(type,new List<SoundPlayer> { sp });
+        }
     }
 }

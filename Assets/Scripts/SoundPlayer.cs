@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,8 +29,8 @@ public class SoundPlayer : MonoBehaviour
     IEnumerator DestroyWhenEndSound(float time)
     {
         yield return new WaitForSeconds(time);
-
-        SoundManager.instance.soundPlayerList.Remove(this);
+        string typeName = audioSource.outputAudioMixerGroup.ToString();
+        SoundManager.instance.soundPlayerDic[(SoundType)Enum.Parse((typeof(SoundType)), typeName)].Remove(this);
         Destroy(this);
     }
 }
