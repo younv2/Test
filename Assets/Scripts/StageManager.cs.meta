@@ -3,7 +3,10 @@ guid: a8268677ba9d69f459f5129b57ad169d
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - cardPrefab: {instanceID: 0}
+  - cardParent: {instanceID: 0}
+  - board: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

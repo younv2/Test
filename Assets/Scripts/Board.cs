@@ -6,23 +6,60 @@ public class Board : MonoBehaviour
 {
     public GameObject card; //카드 프리팹 담는 변수
 
-    public void SetupBoard(int[] data) //카드 데이터 외부에서 받고 카드 생성 및 배치
+
+    public void SetupBoard(int stage, int[] data)
     {
-        ClearBoard(); //기존 보드에 있는 카드 오브젝트 삭제
+        ClearBoard();
+
+        int columns = 4;
+        float gapX = 1.4f;
+        float gapY = 2.0f;
+        float offsetX = -2.1f;
+        float offsetY = 0.7f;
+
+        // 스테이지별로 배치 설정 다르게
+        switch (stage)
+        {
+            case 1:
+            case 2:
+            case 3: // 8장 (4x2)
+                columns = 4;
+                gapX = 1.4f;
+                gapY = 2.0f;
+                offsetX = -2.1f;
+                offsetY = 0.7f;
+                break;
+            case 4:
+            case 5:
+            case 6: // 12장 (4x3)
+                columns = 4;
+                gapX = 1.4f;
+                gapY = 2.0f;
+                offsetX = -2.1f;
+                offsetY = 0.7f;
+                break;
+            case 7:
+            case 8: // 16장 (4x4)
+                columns = 4;
+                gapX = 1.4f;
+                gapY = 2.0f;
+                offsetX = -2.1f;
+                offsetY = 2.1f;
+                break;
+        }
 
         for (int i = 0; i < data.Length; i++)
-        //카드 데이터 수만큼 반복문 실행 (짝수로)
         {
             GameObject go = Instantiate(card, this.transform);
-            //this.transform(부모)밑으로 자식 생성
 
-            float x = (i % 4) * 1.4f - 2.1f; //카드 가로 위치 * 카드간격 - 좌표x
-            float y = (i / 4) * 1.4f - 3.0f; //카드 세로 위치 * 카드간격 - 좌표y
-            go.transform.position = new Vector2(x, y); //카드 위치 계산한 값으로 설정
+            float x = (i % columns) * gapX + offsetX;
+            float y = -(i / columns) * gapY + offsetY;
+            go.transform.localPosition = new Vector2(x, y);
 
-            go.GetComponent<Card>().Setting(data[i]); //setting 함수를 통해 카드의 내용을 설정.
+            go.GetComponent<Card>().Setting(data[i]);
         }
     }
+
 
     void ClearBoard() //스테이지 바꿀때 카드쌓임 방지
     {

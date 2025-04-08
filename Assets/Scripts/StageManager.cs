@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class StageManager : MonoBehaviour
@@ -15,16 +16,24 @@ public class StageManager : MonoBehaviour
         StartStage(currentStage);
     }
 
-    public void StartStage(int stage) //enum에서 int로 변경
+    public void StartStage(int stage)
     {
         ClearCards();
 
-        int cardCount = GetCardCount(stage); //게임 시작되자마자 몇장의 카드가 필요한지 확인.
-        GenerateCards(cardCount); //그 수만큼 카드 생성
+        int cardCount = GetCardCount(stage);
 
-        GameManager.stage = (int)stage + 1; // GameManager에 현재 스테이지 숫자 전달 (Stage1 == 0이므로 +1)
-        GameManager.instance.cardCount = cardCount; // GameManager에 카드 수 전달
+        // 카드 데이터 생성: 0,0,1,1,2,2,3,3... (짝 맞추기용)
+        int[] cardData = new int[cardCount];
+        for (int i = 0; i < cardCount; i++) cardData[i] = i / 2;
+        cardData = cardData.OrderBy(x => Random.Range(0f, 1f)).ToArray(); // 셔플
+
+        board.SetupBoard(stage, cardData); // ? 카드 배치 책임을 Board로 넘김
+
+        GameManager.stage = stage;
+        GameManager.instance.cardCount = cardCount;
     }
+
+
 
     int GetCardCount(int stage)
     {
@@ -46,14 +55,8 @@ public class StageManager : MonoBehaviour
         }
     }
 
-    void GenerateCards(int count) //함수가 호출될 때 얼마나 많은 카드를 만들지 정수값으로 전달
-    {
-        for (int i = 0; i < count; i++) //count 만큼 반복해서 아래 코드를 실행
-        {
-            Instantiate(cardPrefab, cardParent); //프리팹을 씬 안에 새로 생성하는 함수
-            //cardParent아래로 8개 생성.
-        }
-    }
+   
+
 
     void ClearCards() //cardParent 안에 있는 모든 오브젝트를 하나씩 삭제
     {
@@ -65,5 +68,5 @@ public class StageManager : MonoBehaviour
 
     // 임시) 버튼에서 호출할 수 있게 만든 메서드
     public void OnClickStage1() => StartStage(1); //int로 변경
-
+    
 }
