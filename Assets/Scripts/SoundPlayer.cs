@@ -21,9 +21,9 @@ public class SoundPlayer : MonoBehaviour
     }
     public void Play()
     {
-        
         audioSource.Play();
-        StartCoroutine(DestroyWhenEndSound(audioSource.clip.length));
+        if(!audioSource.loop)
+            StartCoroutine(DestroyWhenEndSound(audioSource.clip.length));
     }
 
     IEnumerator DestroyWhenEndSound(float time)
@@ -31,6 +31,6 @@ public class SoundPlayer : MonoBehaviour
         yield return new WaitForSeconds(time);
         string typeName = audioSource.outputAudioMixerGroup.ToString();
         SoundManager.instance.soundPlayerDic[(SoundType)Enum.Parse((typeof(SoundType)), typeName)].Remove(this);
-        Destroy(this);
+        Destroy(this.gameObject);
     }
 }

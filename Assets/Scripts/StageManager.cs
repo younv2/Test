@@ -13,6 +13,7 @@ public class StageManager : MonoBehaviour
 
     void Start()
     {
+        currentStage = GameManager.stage;
         StartStage(currentStage);
     }
 
