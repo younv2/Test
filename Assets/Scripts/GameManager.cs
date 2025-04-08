@@ -22,6 +22,9 @@ public class GameManager : MonoBehaviour
 
     public int life = 10;
 
+    public GameObject dimPanel;
+    public GameObject gameOverPanel;
+
     private void Awake()
     {
         if(instance == null)
@@ -32,6 +35,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Time.timeScale = 1f;
+        Debug.Log("[GameManager] stage: " + stage);
     }
 
     void Update()
@@ -53,11 +57,7 @@ public class GameManager : MonoBehaviour
             if(cardCount == 0)
             {
                 Time.timeScale = 0f;
-                endTxt.SetActive(true);
-                if(GetStarScore() == 3)
-                {
-                    StageClear();
-                }
+                StageClear();
             }
         }
         else
@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
         secondCard = null;
     }
 
-    public void StageClear()
+    private void NextStageOpen()
     {
         if (PlayerPrefs.GetInt("clearMaxStage") < stage + 1)
         {
@@ -83,20 +83,49 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void StageClear()
+    {
+        if(GetStarScore() == 3)
+        {
+            NextStageOpen();
+        }
+        GameEnd(true);
+    }
+
     private void GameOver()
     {
+        GameEnd(false);
+    }
+
+    private void GameEnd(bool isClear)
+    {
         Time.timeScale = 0f;
-        endTxt.SetActive(true);
+        if (gameOverPanel == null)
+        {
+            Debug.LogError("GameOverPanel is not assigned in the inspector!");
+            return;
+        }
+
+        GameOverPanel panel = gameOverPanel.GetComponent<GameOverPanel>();
+        if (panel == null)
+        {
+            Debug.LogError("GameOverPanel component is missing!");
+            return;
+        }
+
+        dimPanel?.SetActive(true);  // null 체크와 함께 활성화
+        gameOverPanel.SetActive(true);
+        panel.ShowResult(isClear, GetStarScore());
     }
 
     private int GetStarScore()
     {
         int starScore = 0;
-        if(time <= 15f && life >= 3)
+        if(time <= 27f && life >= 3)
         {
             starScore = 3;
         }
-        else if (time <= 20f && life >= 2)
+        else if (time <= 28f && life >= 2)
         {
             starScore = 2;
         }
