@@ -474,7 +474,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 2451510350106662840, guid: 2b13f3d2be3af064b9a1f69203529c69, type: 3}
   cardParent: {fileID: 141767001}
-  currentStage: 7
+  currentStage: 1
   board: {fileID: 141767002}
 --- !u!1 &488442240
 GameObject:
