@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         lifeText.text = life.ToString();
+        stageTxt.text = stage.ToString();
         Debug.Log("[GameManager] life: " + life);
         Debug.Log("[GameManager] stage: " + stage);
     }
