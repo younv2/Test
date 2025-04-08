@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     public static int stage = 0;
 
     public int life = 10;
+    public Text lifeText;
 
     public GameObject dimPanel;
     public GameObject gameOverPanel;
@@ -35,6 +36,8 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Time.timeScale = 1f;
+        lifeText.text = life.ToString();
+        Debug.Log("[GameManager] life: " + life);
         Debug.Log("[GameManager] stage: " + stage);
     }
 
@@ -64,8 +67,7 @@ public class GameManager : MonoBehaviour
         {
             firstCard.CloseCard();
             secondCard.CloseCard();
-
-            life--;
+            DownLife(); 
             if(life <= 0)
             {
                 GameOver();
@@ -136,4 +138,9 @@ public class GameManager : MonoBehaviour
         Debug.Log("[GameManager] starScore: " + starScore);
         return starScore;
     }   
+    
+    private void DownLife() {
+        life--;
+        lifeText.text = life.ToString();
+    }
 }
