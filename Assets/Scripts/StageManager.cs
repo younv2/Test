@@ -7,15 +7,15 @@ public class StageManager : MonoBehaviour
     public GameObject cardPrefab; //카드 프리팹 담는곳
     public Transform cardParent; //어떤 오브젝트에 넣을지
 
-    public enum StageType { Stage1, Stage2, Stage3, Stage4 }
-    public StageType currentStage = StageType.Stage1; //현재 스테이지가 어디인지 저장해두는 변수
+    public int currentStage = 1; // 스테이지 숫자 (1 ~ 8)
+    public Board board;
 
     void Start()
     {
-        //StartStage(currentStage);
+        StartStage(currentStage);
     }
 
-    public void StartStage(StageType stage)
+    public void StartStage(int stage) //enum에서 int로 변경
     {
         ClearCards();
 
@@ -26,17 +26,21 @@ public class StageManager : MonoBehaviour
         GameManager.instance.cardCount = cardCount; // GameManager에 카드 수 전달
     }
 
-    int GetCardCount(StageType stage)
+    int GetCardCount(int stage)
     {
         switch (stage)
         {
-            case StageType.Stage1:
-            case StageType.Stage2:
-                return 8; //스테이지1,2에서는 8장
-            case StageType.Stage3:
-                return 12;//스테이지3은 12장
-            case StageType.Stage4:
-                return 16;//스테이지4는 16장
+            case 1:
+            case 2:
+            case 3:
+                return 8; //스테이지1~3에서는 8장
+            case 4:
+            case 5:
+            case 6:
+                return 12;//스테이지4~6은 12장
+            case 7:
+            case 8:
+                return 16;//스테이지7~8은 16장
             default:
                 return 8;//잘못된 값 불러올 경우 기본값 8장 반환.
         }
@@ -53,15 +57,13 @@ public class StageManager : MonoBehaviour
 
     void ClearCards() //cardParent 안에 있는 모든 오브젝트를 하나씩 삭제
     {
-        foreach (Transform child in cardParent)
+        for (int i = cardParent.childCount - 1; i >= 0; i--)
         {
-            DestroyImmediate(child.gameObject);
+            DestroyImmediate(cardParent.GetChild(i).gameObject);
         }
     }
 
     // 임시) 버튼에서 호출할 수 있게 만든 메서드
-    public void OnClickStage1() => StartStage(StageType.Stage1);
-    public void OnClickStage2() => StartStage(StageType.Stage2);
-    public void OnClickStage3() => StartStage(StageType.Stage3);
-    public void OnClickStage4() => StartStage(StageType.Stage4);
+    public void OnClickStage1() => StartStage(1); //int로 변경
+
 }
