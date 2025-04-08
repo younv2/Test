@@ -9,6 +9,7 @@ public class MainManager : MonoBehaviour
     public Button startBtn;
     public Button settingBtn;
     public Button collectionBtn;
+    public SettingPopup settingPopup;
     private void Awake()
     {
         startBtn.onClick.AddListener(() => 
@@ -17,7 +18,7 @@ public class MainManager : MonoBehaviour
         });
         settingBtn.onClick.AddListener(() =>
         {
-
+            settingPopup.gameObject.SetActive(true);
         });
         collectionBtn.onClick.AddListener(() =>
         {
