@@ -381,8 +381,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8268677ba9d69f459f5129b57ad169d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardPrefab: {fileID: 0}
-  cardParent: {fileID: 0}
+  cardPrefab: {fileID: 2451510350106662840, guid: 2b13f3d2be3af064b9a1f69203529c69, type: 3}
+  cardParent: {fileID: 141767001}
   currentStage: 0
 --- !u!1 &519420028
 GameObject:

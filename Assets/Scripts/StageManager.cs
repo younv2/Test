@@ -12,7 +12,7 @@ public class StageManager : MonoBehaviour
 
     void Start()
     {
-        StartStage(currentStage);
+        //StartStage(currentStage);
     }
 
     public void StartStage(StageType stage)
@@ -55,7 +55,7 @@ public class StageManager : MonoBehaviour
     {
         foreach (Transform child in cardParent)
         {
-            Destroy(child.gameObject);
+            DestroyImmediate(child.gameObject);
         }
     }
 
