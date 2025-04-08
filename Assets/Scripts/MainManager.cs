@@ -24,4 +24,8 @@ public class MainManager : MonoBehaviour
             SceneManager.LoadScene("CollectionScene");
         });
     }
+    private void Start()
+    {
+        SoundManager.instance.PlaySound(SoundType.BGM, "BGM", true);
+    }
 }
