@@ -14,6 +14,16 @@ public class CollectedCard : MonoBehaviour
     private bool isFlipping = false;
     private bool isBackShowing = false;
 
+    private void Awake()
+    {
+        // Call this method to play Animation upon entering the CollectionScene
+        animator = GetComponent<Animator>();
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("IdleFront"))
+        {
+            animator.Play("IdleFront");
+        }
+    }
+
     public void Update()
     {
         // If locked images are set active, cards cannot be clicked
@@ -74,10 +84,10 @@ public class CollectedCard : MonoBehaviour
         }
     }
 
-    // Call this at the END of the animation
+    // Call this at the END of the animation (e.g., frame 20)
     public void FinishFlip()
     {
         isBackShowing = !isBackShowing;
         isFlipping = false;
-    }
+    }  
 }
