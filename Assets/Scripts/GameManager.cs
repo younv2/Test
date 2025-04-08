@@ -20,6 +20,11 @@ public class GameManager : MonoBehaviour
 
     public static int stage = 0;
 
+    public int life = 10;
+
+    public GameObject dimPanel;
+    public GameObject gameOverPanel;
+
     private void Awake()
     {
         if(instance == null)
@@ -30,6 +35,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Time.timeScale = 1f;
+        Debug.Log("[GameManager] stage: " + stage);
     }
 
     void Update()
@@ -38,8 +44,7 @@ public class GameManager : MonoBehaviour
         timeTxt.text = time.ToString("N2");
         if (time > 30.0f)
         {
-            endTxt.SetActive(true);
-            Time.timeScale = 0.0f;
+            GameOver();
         }
     }
     public void Matched()
@@ -52,7 +57,6 @@ public class GameManager : MonoBehaviour
             if(cardCount == 0)
             {
                 Time.timeScale = 0f;
-                endTxt.SetActive(true);
                 StageClear();
             }
         }
@@ -60,16 +64,76 @@ public class GameManager : MonoBehaviour
         {
             firstCard.CloseCard();
             secondCard.CloseCard();
+
+            life--;
+            if(life <= 0)
+            {
+                GameOver();
+            }
         }
         firstCard = null;
         secondCard = null;
     }
 
-    public void StageClear()
+    private void NextStageOpen()
     {
         if (PlayerPrefs.GetInt("clearMaxStage") < stage + 1)
         {
             PlayerPrefs.SetInt("clearMaxStage", stage + 1);
         }
     }
+
+    private void StageClear()
+    {
+        if(GetStarScore() == 3)
+        {
+            NextStageOpen();
+        }
+        GameEnd(true);
+    }
+
+    private void GameOver()
+    {
+        GameEnd(false);
+    }
+
+    private void GameEnd(bool isClear)
+    {
+        Time.timeScale = 0f;
+        if (gameOverPanel == null)
+        {
+            Debug.LogError("GameOverPanel is not assigned in the inspector!");
+            return;
+        }
+
+        GameOverPanel panel = gameOverPanel.GetComponent<GameOverPanel>();
+        if (panel == null)
+        {
+            Debug.LogError("GameOverPanel component is missing!");
+            return;
+        }
+
+        dimPanel?.SetActive(true);  // null 체크와 함께 활성화
+        gameOverPanel.SetActive(true);
+        panel.ShowResult(isClear, GetStarScore());
+    }
+
+    private int GetStarScore()
+    {
+        int starScore = 0;
+        if(time <= 27f && life >= 3)
+        {
+            starScore = 3;
+        }
+        else if (time <= 28f && life >= 2)
+        {
+            starScore = 2;
+        }
+        else
+        {
+            starScore = 1;
+        }
+        Debug.Log("[GameManager] starScore: " + starScore);
+        return starScore;
+    }   
 }
