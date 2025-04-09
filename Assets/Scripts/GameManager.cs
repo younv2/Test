@@ -17,14 +17,16 @@ public class GameManager : MonoBehaviour
     private float time = 0f;
 
     public Text stageTxt;
-
     public static int stage = 0;
-
     public int life = 10;
     public Text lifeText;
 
     public GameObject dimPanel;
     public GameObject gameOverPanel;
+
+    // 카드 컬렉션 관련 변수
+    public const string COLLECTION_KEY = "collections";
+    private HashSet<int> collectedCards;
 
     private void Awake()
     {
@@ -33,6 +35,7 @@ public class GameManager : MonoBehaviour
             instance = this;
         }
     }
+
     private void Start()
     {
         Time.timeScale = 1f;
@@ -51,6 +54,50 @@ public class GameManager : MonoBehaviour
             GameOver();
         }
     }
+
+    // add and save card to collection
+    private void SaveCardToCollection()
+    {
+        string collectionData = PlayerPrefs.GetString(COLLECTION_KEY, "");
+        HashSet<int> collectionCards = new HashSet<int>();
+        
+        if (!string.IsNullOrEmpty(collectionData))
+        {
+            string[] cardIds = collectionData.Split(',');
+            foreach (string id in cardIds)
+            {
+                if(int.TryParse(id, out int parsedId))
+                {
+                    collectionCards.Add(parsedId);
+                }
+            }
+        }
+
+        if(collectionCards.Count == 4)
+        {
+            Debug.Log("[GameManager] 모든 카드를 모았습니다.");
+            return;
+        }
+
+        int idx = 1;
+        while(idx <= 4)
+        {
+            if(!IsCollected(idx))
+            {
+                break;
+            }
+            idx++;
+        }
+
+        if (collectionCards.Add(idx))
+        {
+            string newCollectionData = string.Join(",", collectionCards);
+            PlayerPrefs.SetString(COLLECTION_KEY, newCollectionData);
+            PlayerPrefs.Save();
+            Debug.Log($"[GameManager] New card {idx} added to collection!");
+        }
+    }
+
     public void Matched()
     {
         if(firstCard.idx == secondCard.idx)
@@ -90,6 +137,7 @@ public class GameManager : MonoBehaviour
     {
         if(GetStarScore() == 3)
         {
+            SaveCardToCollection();
             NextStageOpen();
         }
         GameEnd(true);
@@ -116,7 +164,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        dimPanel?.SetActive(true);  // null 체크와 함께 활성화
+        dimPanel?.SetActive(true);
         gameOverPanel.SetActive(true);
         panel.ShowResult(isClear, GetStarScore());
     }
@@ -140,8 +188,20 @@ public class GameManager : MonoBehaviour
         return starScore;
     }   
     
-    private void DownLife() {
+    private void DownLife()
+    {
         life--;
         lifeText.text = life.ToString();
+    }
+
+    private bool IsCollected(int idx)
+    {
+        string collectionData = PlayerPrefs.GetString(COLLECTION_KEY, "");
+        return collectionData.Contains(idx.ToString());
+    }
+
+    private void ClearCollection()
+    {
+        PlayerPrefs.DeleteKey(COLLECTION_KEY);
     }
 }
