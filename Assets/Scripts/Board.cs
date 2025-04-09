@@ -46,6 +46,13 @@ public class Board : MonoBehaviour
                 offsetX = -2.1f;
                 offsetY = 2.1f;
                 break;
+            case 9: // 8¿Â (4x2)
+                columns = 4;
+                gapX = 1.4f;
+                gapY = 2.0f;
+                offsetX = -2.1f;
+                offsetY = 0.7f;
+                break;
         }
 
         for (int i = 0; i < data.Length; i++)
