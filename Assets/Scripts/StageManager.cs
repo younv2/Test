@@ -51,6 +51,8 @@ public class StageManager : MonoBehaviour
             case 7:
             case 8:
                 return 16;//스테이지7~8은 16장
+            case 9:
+                return 8;//히든스테이지는 8장으로 구성
             default:
                 return 8;//잘못된 값 불러올 경우 기본값 8장 반환.
         }
@@ -69,5 +71,17 @@ public class StageManager : MonoBehaviour
 
     // 임시) 버튼에서 호출할 수 있게 만든 메서드
     public void OnClickStage1() => StartStage(1); //int로 변경
-    
+
+    // 히든 스테이지 해금 처리
+    public void UnlockHiddenStage()
+    {
+        PlayerPrefs.SetInt("HiddenStageUnlocked", 1);
+        PlayerPrefs.Save();
+    }
+
+    public bool IsHiddenStageUnlocked()
+    {
+        int clearedStage = PlayerPrefs.GetInt("clearMaxStage", 1);
+        return clearedStage >= 8;
+    }
 }
