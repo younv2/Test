@@ -606,6 +606,7 @@ MonoBehaviour:
   Front: {fileID: 784501465}
   Back: {fileID: 1305156687}
   Locked: {fileID: 1870775654}
+  index: 4
 --- !u!1 &416714372
 GameObject:
   m_ObjectHideFlags: 0
@@ -1253,6 +1254,7 @@ MonoBehaviour:
   Front: {fileID: 565588431}
   Back: {fileID: 526163626}
   Locked: {fileID: 697477544}
+  index: 3
 --- !u!1 &674688858
 GameObject:
   m_ObjectHideFlags: 0
@@ -2762,6 +2764,7 @@ MonoBehaviour:
   Front: {fileID: 311472488}
   Back: {fileID: 1159776199}
   Locked: {fileID: 948575936}
+  index: 2
 --- !u!1 &1480046315
 GameObject:
   m_ObjectHideFlags: 0
@@ -4103,6 +4106,7 @@ MonoBehaviour:
   Front: {fileID: 2747715880943586521}
   Back: {fileID: 2325269919679399552}
   Locked: {fileID: 3365752456593573418}
+  index: 1
 --- !u!224 &6029372889452036757
 RectTransform:
   m_ObjectHideFlags: 0

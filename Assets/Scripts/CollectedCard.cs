@@ -9,7 +9,10 @@ public class CollectedCard : MonoBehaviour
     public GameObject Front;
     public GameObject Back;
     public GameObject Locked;
-
+    public int index;
+    
+    private HashSet<int> collectedCards;
+    private string collectionKey;
     private bool isLocked = true;
     private bool isFlipping = false;
     private bool isBackShowing = false;
@@ -21,6 +24,13 @@ public class CollectedCard : MonoBehaviour
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("IdleFront"))
         {
             animator.Play("IdleFront");
+        }
+        collectionKey = GameManager.COLLECTION_KEY;
+        LoadCardCollection();
+        if(IsCollected())
+        {
+            isLocked = false;
+            Locked.SetActive(false);
         }
     }
 
@@ -49,7 +59,6 @@ public class CollectedCard : MonoBehaviour
         {
             FlipCard();
         }
-
     }
 
     // Call this method to flip the card
@@ -89,5 +98,30 @@ public class CollectedCard : MonoBehaviour
     {
         isBackShowing = !isBackShowing;
         isFlipping = false;
-    }  
+    }
+
+    
+    // collection scene에서 카드 컬렉션 로드
+    private void LoadCardCollection()
+    {
+        collectedCards = new HashSet<int>();
+        string collectionData = PlayerPrefs.GetString(collectionKey, "");
+        
+        if (!string.IsNullOrEmpty(collectionData))
+        {
+            string[] cardIds = collectionData.Split(',');
+            foreach (string cardId in cardIds)
+            {
+                if(int.TryParse(cardId, out int parsedId))
+                {
+                    collectedCards.Add(parsedId);
+                }
+            }
+        }
+    }
+
+    private bool IsCollected()
+    {
+        return collectedCards.Contains(index);
+    }
 }
