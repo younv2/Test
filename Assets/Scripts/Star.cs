@@ -30,8 +30,8 @@ public class Star : MonoBehaviour
             Debug.LogError("SpriteRenderer component is missing on the Star object!");
             return;
         }
-        // Debug.Log("[Star] starImage: ");
-        starImage.sprite = Resources.Load<Sprite>($"Images/Star{starCount}");
+        Debug.Log("[Star] starImage: ");
+        starImage.sprite = Resources.Load<Sprite>($"Images/Star/Star{starCount}");
         Debug.Log("[Star] starImage: " + starImage.sprite.name);
     }
 }
