@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 
     public int cardCount = 0;
     private float time = 0f;
+    private float limitTime = 30.0f;
 
     public Text stageTxt;
     public static int stage = 0;
@@ -27,6 +28,20 @@ public class GameManager : MonoBehaviour
     // 카드 컬렉션 관련 변수
     public const string COLLECTION_KEY = "collections";
     private HashSet<int> collectedCards;
+
+    // 시간 경고 관련 변수
+    [Header("시간 경고 설정")]
+    public float warningTime = 10f;        // 경고 남은 시간 (초)
+    public string warningSound = "TimeWarning";  // 경고음 클립 이름
+    private bool isWarningActive = false;
+    private bool hasPlayedWarningSound = false;
+    
+    [Header("경고 색상 설정")]
+    public Color warningColor = Color.red;
+    public float blinkInterval = 0.2f;  // 깜빡임 간격 (초)
+    private Color originalTextColor;
+    private float nextBlinkTime = 0f;
+    private bool isWarningColorOn = false;
 
     private void Awake()
     {
@@ -41,6 +56,8 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         lifeText.text = life.ToString();
         stageTxt.text = stage.ToString();
+        originalTextColor = timeTxt.color;
+        hasPlayedWarningSound = false;
         Debug.Log("[GameManager] life: " + life);
         Debug.Log("[GameManager] stage: " + stage);
     }
@@ -49,9 +66,47 @@ public class GameManager : MonoBehaviour
     {
         time += Time.deltaTime;
         timeTxt.text = time.ToString("N2");
-        if (time > 30.0f)
+        
+        // 시간 경고 체크
+        CheckTimeWarning();
+        // 경고 상태일 때 깜빡임 효과
+        if (isWarningActive && Time.time >= nextBlinkTime)
+        {
+            isWarningColorOn = !isWarningColorOn;
+            timeTxt.color = isWarningColorOn ? warningColor : originalTextColor;
+            nextBlinkTime = Time.time + blinkInterval;
+        }
+
+        if (time > limitTime)
         {
             GameOver();
+        }
+    }
+
+    private void CheckTimeWarning()
+    {
+        float remainingTime = limitTime - time;
+        if (remainingTime <= warningTime && !isWarningActive)
+        {
+            Debug.Log("[GameManager] 경고 시작");
+            // 경고 시작
+            isWarningActive = true;
+            isWarningColorOn = true;
+            timeTxt.color = warningColor;
+            nextBlinkTime = Time.time + blinkInterval;
+            
+            // 경고음을 아직 재생하지 않았을 때만 재생
+            if (!hasPlayedWarningSound && SoundManager.instance != null)
+            {
+                SoundManager.instance.PlaySound(SoundType.SFX, warningSound, false);
+                hasPlayedWarningSound = true;
+            }
+        }
+        else if (remainingTime > warningTime && isWarningActive)
+        {
+            // 경고 해제
+            isWarningActive = false;
+            timeTxt.color = originalTextColor;
         }
     }
 
