@@ -605,6 +605,10 @@ MonoBehaviour:
   lifeText: {fileID: 193107301}
   dimPanel: {fileID: 554611514}
   gameOverPanel: {fileID: 1361818722}
+  warningTime: 10
+  warningSound: TimeWarning
+  warningColor: {r: 1, g: 0, b: 0, a: 1}
+  blinkSpeed: 2
 --- !u!4 &206818352
 Transform:
   m_ObjectHideFlags: 0
@@ -960,6 +964,7 @@ GameObject:
   - component: {fileID: 548628967}
   - component: {fileID: 548628969}
   - component: {fileID: 548628968}
+  - component: {fileID: 548628970}
   m_Layer: 5
   m_Name: TimeTxt
   m_TagString: Untagged
@@ -1028,6 +1033,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 548628966}
   m_CullTransparentMesh: 1
+--- !u!95 &548628970
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 548628966}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e6dc47d3379020649ad602b0df867036, type: 2}
+  m_CullingMode: 2
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &554611514
 GameObject:
   m_ObjectHideFlags: 0
