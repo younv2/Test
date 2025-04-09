@@ -135,9 +135,13 @@ public class GameManager : MonoBehaviour
 
     private void StageClear()
     {
-        if(GetStarScore() == 3)
+        if (stage == 9)
         {
             SaveCardToCollection();
+        }
+
+        if(GetStarScore() == 3)
+        {
             NextStageOpen();
         }
         GameEnd(true);
