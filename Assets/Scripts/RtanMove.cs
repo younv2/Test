@@ -28,13 +28,13 @@ public class RtanMove : MonoBehaviour
 
         // 캐릭터의 각 스테이지 위치 설정
         stagePositions[0] = new Vector2(-239f, 27f); // 1스테이지
-        stagePositions[1] = new Vector2(-198f, 48f); // 2
-        stagePositions[2] = new Vector2(-8f, 48f);   // 3
-        stagePositions[3] = new Vector2(187f, -22f); // 4
-        stagePositions[4] = new Vector2(-8f, -92f);  // 5
-        stagePositions[5] = new Vector2(-208f, -156f); // 6
-        stagePositions[6] = new Vector2(-8f, -225f); // 7
-        stagePositions[7] = new Vector2(178f, -225f); // 8
+        stagePositions[1] = new Vector2(-200f, 55f); // 2
+        stagePositions[2] = new Vector2(-8f, 55f);   // 3
+        stagePositions[3] = new Vector2(187f, 2f); // 4
+        stagePositions[4] = new Vector2(-8f, -55f);  // 5
+        stagePositions[5] = new Vector2(-208f, -108f); // 6
+        stagePositions[6] = new Vector2(-8f, -160f); // 7
+        stagePositions[7] = new Vector2(180f, -160f); // 8
     }
 
     void Update()
