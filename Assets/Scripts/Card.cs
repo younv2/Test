@@ -28,7 +28,7 @@ public class Card : MonoBehaviour
     public void Setting(int num)
     {
         idx = num;
-        frontImage.sprite = Resources.Load<Sprite>($"Images/rtan/rtan{num}");
+        frontImage.sprite = Resources.Load<Sprite>($"Images/ProfileCard/Card{num + 1}");
     }
     public void OpenCard()
     {
