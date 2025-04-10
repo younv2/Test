@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class Card : MonoBehaviour
 {
@@ -10,10 +11,13 @@ public class Card : MonoBehaviour
     public Animator anim;
 
     public SpriteRenderer frontImage;
+
+    public float previewTime = 2f;
     // Start is called before the first frame update
     void Start()
     {
         frontImage = GetComponent<SpriteRenderer>();
+        StartCoroutine(PreviewCardAtStart());
     }
 
     // Update is called once per frame
@@ -60,5 +64,25 @@ public class Card : MonoBehaviour
     void DestroyCardInvoke()
     {
         Destroy(gameObject);
+    }
+
+    private IEnumerator PreviewCardAtStart()
+    {
+        // 카드 앞면 보여주기
+        front.SetActive(true);
+        back.SetActive(false);
+        anim.SetBool("isOpen", true);
+        
+        // 타이머 멈추기
+        GameManager.instance.enabled = false;
+
+        // 지정된 시간 동안 기다리기
+        yield return new WaitForSeconds(previewTime);
+
+        // 카드 뒤집기
+        CloseCardInvoke();
+        
+        // 타이머 다시 시작
+        GameManager.instance.enabled = true;
     }
 }
