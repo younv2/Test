@@ -1,15 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class CollectedCard : MonoBehaviour
 {
-    public Animator animator;
-    public GameObject Front;
-    public GameObject Back;
-    public GameObject Locked;
-    public int index;
+    [SerializeField] private GameObject front;
+    [SerializeField] private GameObject back;
+    [SerializeField] private GameObject locked;
+    [SerializeField] private int index;
+    private Animator animator;
     
     private HashSet<int> collectedCards;
     private string collectionKey;
@@ -21,30 +19,15 @@ public class CollectedCard : MonoBehaviour
     {
         // Call this method to play Animation upon entering the CollectionScene
         animator = GetComponent<Animator>();
-        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("IdleFront"))
-        {
-            animator.Play("IdleFront");
-        }
         collectionKey = GameManager.COLLECTION_KEY;
         LoadCardCollection();
         if(IsCollected())
         {
-            isLocked = false;
-            Locked.SetActive(false);
+            locked.SetActive(false);
         }
-    }
 
-    public void Update()
-    {
         // If locked images are set active, cards cannot be clicked
-        if (Locked.activeSelf)
-        {
-            isLocked = true;
-        }
-        else if (!Locked.activeSelf)
-        {
-            isLocked = false;
-        }
+        isLocked = locked.activeSelf;
     }
 
     // This method is called when the card is clicked
@@ -70,11 +53,11 @@ public class CollectedCard : MonoBehaviour
 
         if (!isBackShowing)
         {
-            animator.SetTrigger("FlipToBack");
+            animator.SetTrigger(Global.AnimId.FLIP_TO_BACK);
         }
         else
         {
-            animator.SetTrigger("FlipToFront");
+            animator.SetTrigger(Global.AnimId.FLIP_TO_FRONT);
         }
     }
 
@@ -83,13 +66,13 @@ public class CollectedCard : MonoBehaviour
     {
         if (!isBackShowing)
         {
-            Front.SetActive(false);
-            Back.SetActive(true);
+            front.SetActive(false);
+            back.SetActive(true);
         }
         else
         {
-            Back.SetActive(false);
-            Front.SetActive(true);
+            back.SetActive(false);
+            front.SetActive(true);
         }
     }
 
@@ -106,20 +89,17 @@ public class CollectedCard : MonoBehaviour
     {
         collectedCards = new HashSet<int>();
         string collectionData = PlayerPrefs.GetString(collectionKey, "");
-        
-        if (!string.IsNullOrEmpty(collectionData))
+        if (string.IsNullOrEmpty(collectionData))
+            return;
+        string[] cardIds = collectionData.Split(',');
+        foreach (string cardId in cardIds)
         {
-            string[] cardIds = collectionData.Split(',');
-            foreach (string cardId in cardIds)
+            if(int.TryParse(cardId, out int parsedId))
             {
-                if(int.TryParse(cardId, out int parsedId))
-                {
-                    collectedCards.Add(parsedId);
-                }
+                collectedCards.Add(parsedId);
             }
         }
     }
-
     private bool IsCollected()
     {
         return collectedCards.Contains(index);

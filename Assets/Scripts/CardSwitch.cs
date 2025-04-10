@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class CardSwitch : MonoBehaviour
 {
-    public GameObject Back;
-    public GameObject[] Profiles;
+    [SerializeField]private GameObject back;
+    [SerializeField]private GameObject[] profiles;
 
     private int profileIndex = 0;
     private bool isBack = true;
@@ -19,7 +19,7 @@ public class CardSwitch : MonoBehaviour
         if (isBack)
         {
             ShowProfile(profileIndex);
-            profileIndex = (profileIndex + 1) % Profiles.Length;
+            profileIndex = (profileIndex + 1) % profiles.Length;
         }
         else
         {
@@ -31,15 +31,15 @@ public class CardSwitch : MonoBehaviour
 
     void ShowBack()
     {
-        Back.SetActive(true);
-        foreach (var profile in Profiles)
+        back.SetActive(true);
+        foreach (var profile in profiles)
             profile.SetActive(false);
     }
 
     void ShowProfile(int index)
     {
-        Back.SetActive(false);
-        for (int i = 0; i < Profiles.Length; i++)
-            Profiles[i].SetActive(i == index);
+        back.SetActive(false);
+        for (int i = 0; i < profiles.Length; i++)
+            profiles[i].SetActive(i == index);
     }
 }

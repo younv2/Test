@@ -602,10 +602,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a6b30e10c8f87f4e8b29c10159ef502, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 413526544}
-  Front: {fileID: 784501465}
-  Back: {fileID: 1305156687}
-  Locked: {fileID: 1870775654}
+  front: {fileID: 784501465}
+  back: {fileID: 1305156687}
+  locked: {fileID: 1870775654}
   index: 4
 --- !u!1 &416714372
 GameObject:
@@ -1250,10 +1249,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a6b30e10c8f87f4e8b29c10159ef502, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 636636304}
-  Front: {fileID: 565588431}
-  Back: {fileID: 526163626}
-  Locked: {fileID: 697477544}
+  front: {fileID: 565588431}
+  back: {fileID: 526163626}
+  locked: {fileID: 697477544}
   index: 3
 --- !u!1 &674688858
 GameObject:
@@ -2760,10 +2758,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a6b30e10c8f87f4e8b29c10159ef502, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 1426631905}
-  Front: {fileID: 311472488}
-  Back: {fileID: 1159776199}
-  Locked: {fileID: 948575936}
+  front: {fileID: 311472488}
+  back: {fileID: 1159776199}
+  locked: {fileID: 948575936}
   index: 2
 --- !u!1 &1480046315
 GameObject:
@@ -4102,10 +4099,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a6b30e10c8f87f4e8b29c10159ef502, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 2977586835246238289}
-  Front: {fileID: 2747715880943586521}
-  Back: {fileID: 2325269919679399552}
-  Locked: {fileID: 3365752456593573418}
+  front: {fileID: 2747715880943586521}
+  back: {fileID: 2325269919679399552}
+  locked: {fileID: 3365752456593573418}
   index: 1
 --- !u!224 &6029372889452036757
 RectTransform:

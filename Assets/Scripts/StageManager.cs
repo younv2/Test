@@ -5,11 +5,10 @@ using UnityEngine;
 
 public class StageManager : MonoBehaviour
 {
-    public GameObject cardPrefab; //카드 프리팹 담는곳
-    public Transform cardParent; //어떤 오브젝트에 넣을지
+    [SerializeField] private Transform cardParent; //어떤 오브젝트에 넣을지
 
-    public int currentStage = 1; // 스테이지 숫자 (1 ~ 8)
-    public Board board;
+    private int currentStage = 1; // 스테이지 숫자 (1 ~ 8)
+    [SerializeField] private Board board;
 
     void Start()
     {
@@ -77,21 +76,5 @@ public class StageManager : MonoBehaviour
         {
             DestroyImmediate(cardParent.GetChild(i).gameObject);
         }
-    }
-
-    // 임시) 버튼에서 호출할 수 있게 만든 메서드
-    public void OnClickStage1() => StartStage(1); //int로 변경
-
-    // 히든 스테이지 해금 처리
-    public void UnlockHiddenStage()
-    {
-        PlayerPrefs.SetInt("HiddenStageUnlocked", 1);
-        PlayerPrefs.Save();
-    }
-
-    public bool IsHiddenStageUnlocked()
-    {
-        int clearedStage = PlayerPrefs.GetInt("clearMaxStage", 1);
-        return clearedStage >= 8;
     }
 }

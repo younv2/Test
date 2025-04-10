@@ -7,11 +7,10 @@ using UnityEngine.UI;
 
 public class StageSelector : MonoBehaviour
 {
-    public Button joinBtn;
-    public Button leftBtn;
-    public Button rightBtn;
-    public Button hiddenStageButton;
-    public StageManager stageManager;
+    [SerializeField] private Button joinBtn;
+    [SerializeField] private Button leftBtn;
+    [SerializeField] private Button rightBtn;
+    [SerializeField] private Button hiddenStageButton;
 
     public Text stageTxt;
 
@@ -19,15 +18,12 @@ public class StageSelector : MonoBehaviour
 
     public int stage = 1;
 
-    int activeMaxStage;
+    private int activeMaxStage;
 
 
 
     void Start()
     {
-        //Debug.Log("activeMaxStage = " + activeMaxStage);
-
-
         activeMaxStage = PlayerPrefs.GetInt("clearMaxStage");
         if(activeMaxStage == 0)
         {

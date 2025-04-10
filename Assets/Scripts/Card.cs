@@ -5,34 +5,26 @@ public class Card : MonoBehaviour
 {
     public int idx = 0;
 
-    public GameObject front;
-    public GameObject back;
+    [SerializeField]private GameObject front;
+    [SerializeField]private GameObject back;
 
-    public Animator anim;
-
-    public SpriteRenderer frontImage;
+    private Animator anim;
+    private SpriteRenderer frontImage;
 
     public float previewTime = 2f;
-    // Start is called before the first frame update
-    void Start()
-    {
-        frontImage = GetComponent<SpriteRenderer>();
-        StartCoroutine(PreviewCardAtStart());
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void Setting(int num)
     {
+        frontImage = front.GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
+
+        StartCoroutine(PreviewCardAtStart());
         idx = num;
         frontImage.sprite = Resources.Load<Sprite>($"Images/ProfileCard/Card{num + 1}");
     }
     public void OpenCard()
     {
-        anim.SetBool("isOpen", true);
+        anim.SetBool(Global.AnimId.IS_OPEN, true);
         front.SetActive(true);
         back.SetActive(false);
         if(GameManager.instance.firstCard == null)
@@ -52,7 +44,7 @@ public class Card : MonoBehaviour
 
     public void CloseCardInvoke()
     {
-        anim.SetBool("isOpen", false);
+        anim.SetBool(Global.AnimId.IS_OPEN, false);
         front.SetActive(false);
         back.SetActive(true);
     }
@@ -71,7 +63,7 @@ public class Card : MonoBehaviour
         // 카드 앞면 보여주기
         front.SetActive(true);
         back.SetActive(false);
-        anim.SetBool("isOpen", true);
+        anim.SetBool(Global.AnimId.IS_OPEN, true);
         
         // 타이머 멈추기
         GameManager.instance.enabled = false;

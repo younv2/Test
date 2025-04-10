@@ -4,65 +4,51 @@ using UnityEngine.UI;
 
 public class GameOverPanel : MonoBehaviour
 {
-    public GameObject subCard;
-    public GameObject undisCard;
-    public GameObject successTxt;
-    public GameObject starImage1;
-    public GameObject starImage2;
-    public GameObject starImage3;
-    public GameObject starImage4;
-    public GameObject starImage5;
-    public GameObject failTxt;
+    [SerializeField] private GameObject subCard;
+    [SerializeField] private GameObject undisCard;
+    [SerializeField] private Text resultTxt;
+    [SerializeField] private GameObject[] successStars;
+    [SerializeField] private GameObject[] failedStars;
 
-    public Button nextStageBtn;
-
-    [SerializeField] private StarAnimator[] starAnimators; // StarImage1 ~ StarImage5에 붙은 스크립트들
+    [SerializeField] private Button nextStageBtn;
 
     public void ShowResult(bool isSuccess, int starCount = 0)
     {
-        subCard.SetActive(false);
-        undisCard.SetActive(true);
-        nextStageBtn.interactable = false;
-        starImage1.SetActive(false);
-        starImage2.SetActive(false);
-        starImage3.SetActive(false);
-        starImage4.SetActive(false);
-        starImage5.SetActive(false);
-        successTxt.SetActive(isSuccess);
-        failTxt.SetActive(!isSuccess);
-
-        if (isSuccess)
+        subCard.SetActive(isSuccess);
+        undisCard.SetActive(!isSuccess);
+        foreach(var star in successStars)
         {
-            subCard.SetActive(true);
-            undisCard.SetActive(false);
-            nextStageBtn.interactable = (starCount == 3);
-
-            ShowStars(starCount);
+            star.SetActive(false);
         }
-
-        Debug.Log("[GameOverpanel] isSuccess: " + isSuccess);
-        Debug.Log("[GameOverPanel] starCount: " + starCount);
+        foreach (var star in failedStars)
+        {
+            star.SetActive(false);
+        }
+        nextStageBtn.interactable = (starCount == 3) ? true : false;
+        SetResultMsg(isSuccess);
+        if(isSuccess)
+            ShowStars(starCount);
     }
 
     public void ShowStars(int starCount)
     {
-        // 모든 별 비활성화
-        foreach (var animator in starAnimators)
-        {
-            animator.gameObject.SetActive(false);
-        }
 
         // 밝은 별: 애니메이션 재생 (0~2)
         for (int i = 0; i < starCount; i++)
         {
-            starAnimators[i].PlayPop();
+            successStars[i].SetActive(true);
         }
 
-        // 어두운 별: 3 - starCount 만큼 활성화 (예: starCount 2면 어두운별 1개)
-        for (int i = starCount; i < 3; i++)
+        // (예: starCount 2면 어두운별 1개)
+        for (int i = 0; i < 3-starCount ; i++)
         {
-            int darkIndex = 3 + (i - starCount); // 3, 4 중 선택
-            starAnimators[darkIndex].gameObject.SetActive(true);
+            failedStars[i].SetActive(true);
         }
+    }
+    public void SetResultMsg(bool isSuccess)
+    {
+        resultTxt.gameObject.SetActive(true);
+        resultTxt.text = isSuccess ? Global.StrMsg.SUCCESS_MSG : Global.StrMsg.FAILED_MSG;
+        resultTxt.color = isSuccess ? new Color(50 / 255f,1,0f) : new Color(1f,0,0);
     }
 }

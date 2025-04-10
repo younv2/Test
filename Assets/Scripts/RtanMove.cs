@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class RtanMove : MonoBehaviour
 {
-    public Transform character; // 캐릭터 오브젝트
+    public RectTransform character; // 캐릭터 오브젝트
     public Image roadmapImage; // 로드맵 이미지
     public StageSelector stageSelector; // 현재 선택 중인 스테이지 정보 참조
 
@@ -47,8 +47,7 @@ public class RtanMove : MonoBehaviour
 
         // 캐릭터 이동
         Vector2 targetPos = stagePositions[selectedStage - 1];
-        RectTransform rect = character.GetComponent<RectTransform>();
-        rect.anchoredPosition = Vector2.Lerp(rect.anchoredPosition, targetPos, Time.deltaTime * 5f);
+        character.anchoredPosition = Vector2.Lerp(character.anchoredPosition, targetPos, Time.deltaTime * 5f);
 
         // 캐릭터 방향 설정:  → 왼쪽 / 나머지 → 오른쪽
         if (selectedStage == 5 || selectedStage == 6)

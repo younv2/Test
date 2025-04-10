@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class HiddenStageButton : MonoBehaviour
 {
-    public Button hiddenStageBtn; // HdStageJoinBtn 연결
+    [SerializeField]private Button hiddenStageBtn; // HdStageJoinBtn 연결
 
     void Start()
     {
@@ -17,12 +17,5 @@ public class HiddenStageButton : MonoBehaviour
             GameManager.stage = 9;
             SceneManager.LoadScene("MainScene");
         });
-    }
-
-    // 혹시 UI 버튼에 연결했을 때 쓰일 수 있도록 남겨둠
-    public void HdStageJoin()
-    {
-        GameManager.stage = 9;
-        SceneManager.LoadScene("MainScene");
     }
 }
