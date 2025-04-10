@@ -22,17 +22,27 @@ public class StageManager : MonoBehaviour
         ClearCards();
 
         int cardCount = GetCardCount(stage);
+        int pairCount = cardCount / 2;
 
-        // 카드 데이터 생성: 0,0,1,1,2,2,3,3... (짝 맞추기용)
-        int[] cardData = new int[cardCount];
-        for (int i = 0; i < cardCount; i++) cardData[i] = i / 2;
-        cardData = cardData.OrderBy(x => Random.Range(0f, 1f)).ToArray(); // 셔플
+        // 전체 카드 ID 풀 (0~15 중에서 랜덤하게 pairCount개 뽑기)
+        List<int> allCardIds = Enumerable.Range(0, 16).OrderBy(x => Random.Range(0f, 1f)).Take(pairCount).ToList();
 
-        board.SetupBoard(stage, cardData); // ? 카드 배치 책임을 Board로 넘김
+        List<int> cardDataList = new List<int>();
+        foreach (int id in allCardIds)
+        {
+            cardDataList.Add(id); // 1장
+            cardDataList.Add(id); // 짝
+        }
+
+        // 셔플
+        cardDataList = cardDataList.OrderBy(x => Random.Range(0f, 1f)).ToList();
+
+        board.SetupBoard(stage, cardDataList.ToArray());
 
         GameManager.stage = stage;
         GameManager.instance.cardCount = cardCount;
     }
+
 
 
 
