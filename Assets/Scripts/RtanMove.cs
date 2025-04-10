@@ -14,6 +14,7 @@ public class RtanMove : MonoBehaviour
 
     void Start()
     {
+        Time.timeScale = 1.0f;
         // 로드맵 이미지 배열 초기화
         roadmapSprites = new Sprite[8];
 
